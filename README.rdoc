@@ -4,7 +4,42 @@ A JRuby library utilizing Java's concurrency package to create a
 fixed sized thread pool capable of executing tasks asynchronously.
 
 Useful for long-running tasks to be executed outside of the the Request/Response
-cycle.
+cycle of a Rails application.
+
+= Using With Rails
+
+Please remember that ActiveRecord connections may be closed if you pass an 
+AR model into a background task.  It is recommended to pass the id and re-query
+the database inside the task so as everything is thread-safe.
+
+When using inside Rails, it is also recommended to initialize the logger by
+creating <RAILS_ROOT>/config/initializers/j_background_initializer.rb
+
+    JBackground::Base.logger = RAILS_DEFAULT_LOGGER
+    JBackground::Base.pool_size = 5
+    JBackground::Base.instance # force creation before using inside a request
+
+
+= Examples
+
+  JBackground.execute do
+    puts "Hello from Thread #{Thread.current.object_id}" 
+  end
+
+
+  JBackground.execute('Alan', 'Bob', 'Cory') do |x,y,z| 
+    puts "Hello #{x}, #{y}, and #{z}"
+  end
+
+
+  class ExampleTask < JBackground::Task
+    def execute_task
+      puts "Hello from ExampleTask" 
+    end
+  end
+
+  JBackground.execute(ExampleTask.new)
+
 
 == Copyright
 
