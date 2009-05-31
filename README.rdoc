@@ -17,7 +17,7 @@ creating <RAILS_ROOT>/config/initializers/j_background_initializer.rb
 
     JBackground::Base.logger = RAILS_DEFAULT_LOGGER
     JBackground::Base.pool_size = 5
-    JBackground::Base.instance # force creation before using inside a request
+    JBackground::Base.instance # force creation of the pool before using inside a request
 
 
 = Examples
