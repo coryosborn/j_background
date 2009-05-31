@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
+     "j_background.gemspec",
      "lib/j_background.rb",
      "lib/j_background/base.rb",
      "lib/j_background/proc_task.rb",
