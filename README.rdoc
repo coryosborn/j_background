@@ -1,0 +1,11 @@
+= j_background
+
+A JRuby library utilizing Java's concurrency package to create a
+fixed sized thread pool capable of executing tasks asynchronously.
+
+Useful for long-running tasks to be executed outside of the the Request/Response
+cycle.
+
+== Copyright
+
+Copyright (c) 2009 Cory Osborn. See LICENSE for details.
