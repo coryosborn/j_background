@@ -4,27 +4,6 @@ require 'singleton'
 
 # A singleton that utilizes Java's concurrency package to create a
 # fixed sized thread pool capable of executing tasks asynchronously.
-#
-# Task can be blocks or descendants of JBackgroundTask.  For example:
-#   JBackground.execute { puts "Hello from Thread #{Thread.current.object_id}" }
-# or
-#   JBackground.execute('Alan', 'Bob', 'Cory') { |x,y,z| puts "Hello #{x}, #{y}, and #{z}" }
-# or
-#   class ExampleTask < JBackgroundTask
-#     def execute_task
-#       puts "Hello from ExampleTask" 
-#     end
-#   end
-#
-#   JBackground.execute(ExampleTask.new)
-#
-# The size of the thread pool can be defined as
-#   JBackground.pool_size = 2
-# It will default to 5 and can not be changed after the first call to #instance.
-#
-# The logger will default to STDOUT
-# It can be set like this:
-#   JBackground.logger = RAILS_DEFAULT_LOGGER
 module JBackground
   class Base
     include Singleton
