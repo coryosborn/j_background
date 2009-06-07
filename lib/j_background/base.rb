@@ -10,10 +10,7 @@ module JBackground
 
     # initializes the thread pool and defines a finalizer that forces all threads to shutdown
     def initialize
-      @thread_pool = java.util.concurrent.Executors.newFixedThreadPool(JBackground::Base.pool_size || 5)
-      ObjectSpace.define_finalizer(@thread_pool) do
-        @thread_pool.shutdown_now
-      end
+      @thread_pool = java.util.concurrent.Executors.newFixedThreadPool(JBackground::Base.pool_size || 5, JBackgroundThreadFactory.new)
     end
 
     # singleton's instance method for executing a task
@@ -45,6 +42,15 @@ module JBackground
 
     def self.logger=(value)
       @@logger = value
+    end
+  end
+  
+  class JBackgroundThreadFactory
+    include java.util.concurrent.ThreadFactory
+    def new_thread(runnable)
+      rv = java.lang.Thread.new(runnable);
+      rv.setDaemon(true)
+      rv
     end
   end
 end
